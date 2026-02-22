@@ -1,0 +1,4 @@
+PORT=10000
+MONGODB_URI=your_database_string_here
+JWT_SECRET=type_random_letters_here_minimum_20
+PAYSTACK_SECRET_KEY=your_paystack_key_here
