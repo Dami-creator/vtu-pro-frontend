@@ -1,7 +1,8 @@
 // Configuration
 const CONFIG = {
-    API_BASE_URL: 'http://localhost:3000/api', // Change to your backend URL
-    PAYSTACK_PUBLIC_KEY: 'pk_test_your_paystack_key_here'
+    API_BASE_URL: 'https://vtu-pro-api.onrender.com/api',
+ // Change to your backend URL
+    PAYSTACK_PUBLIC_KEY: 'pk_live_b5622bad3a685b2e2d781934f3f1e84146dae9fe'
 };
 
 // State
