@@ -246,42 +246,66 @@ function validatePhone() {
 
 // Payment Functions
 function initiatePayment() {
-    alert('Starting payment...');
+    alert('Step 1: Starting...');
     
-    try {
-        if (!currentUser) {
-            alert('No user logged in');
-            openAuthModal('login');
-            return;
-        }
-        
-        const phone = document.getElementById('phoneNumber').value;
-        const customAmount = document.getElementById('customAmount').value;
-        const amount = selectedAmount || parseFloat(customAmount);
-        
-        alert('Phone: ' + phone + '\nAmount: ' + amount + '\nNetwork: ' + selectedNetwork);
-        
-        if (!selectedNetwork) {
-            alert('Please select a network');
-            return;
-        }
-        
-        if (!validatePhone()) {
-            alert('Invalid phone number');
-            return;
-        }
-        
-        if (!amount || amount < 50) {
-            alert('Minimum amount is ₦50');
-            return;
-        }
-        
-        alert('All checks passed! Opening payment...');
-        
-    } catch (error) {
-        alert('Error: ' + error.message);
+    if (!currentUser) {
+        alert('Step 2: No user - opening login');
+        openAuthModal('login');
+        return;
     }
+    
+    alert('Step 3: User found - ' + currentUser.email);
+    
+    const phone = document.getElementById('phoneNumber').value;
+    alert('Step 4: Phone got - ' + phone);
+    
+    const customAmount = document.getElementById('customAmount').value;
+    alert('Step 5: Custom amount got - ' + customAmount);
+    
+    const amount = selectedAmount || parseFloat(customAmount);
+    alert('Step 6: Final amount - ' + amount);
+    
+    if (!selectedNetwork) {
+        alert('ERROR: No network selected');
+        return;
+    }
+    
+    alert('Step 7: Network selected - ' + selectedNetwork);
+    
+    if (!validatePhone()) {
+        alert('ERROR: Invalid phone');
+        return;
+    }
+    
+    alert('Step 8: Phone valid!');
+    
+    if (!amount || amount < 50) {
+        alert('ERROR: Amount too low');
+        return;
+    }
+    
+    alert('Step 9: All good! Opening payment modal...');
+    
+    // This is where it opens the payment modal
+    pendingTransaction = { 
+        type: currentTab, 
+        network: selectedNetwork, 
+        phone: phone, 
+        amount: amount 
+    };
+    
+    alert('Step 10: Transaction object created');
+    
+    document.getElementById('paymentAmount').textContent = '₦' + amount;
+    alert('Step 11: Amount displayed');
+    
+    document.getElementById('paymentRecipient').textContent = selectedNetwork + ' - ' + phone;
+    alert('Step 12: Recipient displayed');
+    
+    document.getElementById('paymentModal').classList.add('active');
+    alert('Step 13: Modal should be open!');
 }
+
 
 
 function closePaymentModal() {
