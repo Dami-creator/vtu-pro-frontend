@@ -7,9 +7,15 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Allow your frontend to connect
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
+
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/vtu-pro')
