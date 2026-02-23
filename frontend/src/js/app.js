@@ -1,6 +1,6 @@
 // Configuration
 const CONFIG = {
-    API_BASE_URL: 'https://vtu-pro-frontend.onrender.com/',
+    API_BASE_URL: 'https://vtu-pro-frontend.onrender.com/api',
  // Change to your backend URL
     PAYSTACK_PUBLIC_KEY: 'pk_live_b5622bad3a685b2e2d781934f3f1e84146dae9fe'
 };
