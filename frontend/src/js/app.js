@@ -246,36 +246,43 @@ function validatePhone() {
 
 // Payment Functions
 function initiatePayment() {
-    if (!currentUser) {
-        openAuthModal('login');
-        return;
+    alert('Starting payment...');
+    
+    try {
+        if (!currentUser) {
+            alert('No user logged in');
+            openAuthModal('login');
+            return;
+        }
+        
+        const phone = document.getElementById('phoneNumber').value;
+        const customAmount = document.getElementById('customAmount').value;
+        const amount = selectedAmount || parseFloat(customAmount);
+        
+        alert('Phone: ' + phone + '\nAmount: ' + amount + '\nNetwork: ' + selectedNetwork);
+        
+        if (!selectedNetwork) {
+            alert('Please select a network');
+            return;
+        }
+        
+        if (!validatePhone()) {
+            alert('Invalid phone number');
+            return;
+        }
+        
+        if (!amount || amount < 50) {
+            alert('Minimum amount is ₦50');
+            return;
+        }
+        
+        alert('All checks passed! Opening payment...');
+        
+    } catch (error) {
+        alert('Error: ' + error.message);
     }
-    
-    const phone = document.getElementById('phoneNumber').value;
-    const customAmount = document.getElementById('customAmount').value;
-    const amount = selectedAmount || parseFloat(customAmount);
-    
-    if (!selectedNetwork) return showToast('Error', 'Select a network', 'error');
-    if (!validatePhone()) return showToast('Error', 'Invalid phone number', 'error');
-    if (!amount || amount < 50) return showToast('Error', 'Minimum amount is ₦50', 'error');
-    
-    pendingTransaction = { type: currentTab, network: selectedNetwork, phone, amount };
-    
-    document.getElementById('paymentAmount').textContent = formatCurrency(amount);
-    document.getElementById('paymentRecipient').textContent = `${selectedNetworkName} - ${phone}`;
-    document.getElementById('walletBalanceDisplay').textContent = formatCurrency(currentUser.balance || 0);
-    
-    const walletBtn = document.getElementById('walletPayBtn');
-    if ((currentUser.balance || 0) < amount) {
-        walletBtn.classList.add('opacity-50');
-        walletBtn.onclick = () => showToast('Error', 'Insufficient balance', 'error');
-    } else {
-        walletBtn.classList.remove('opacity-50');
-        walletBtn.onclick = payWithWallet;
-    }
-    
-    document.getElementById('paymentModal').classList.add('active');
 }
+
 
 function closePaymentModal() {
     document.getElementById('paymentModal').classList.remove('active');
